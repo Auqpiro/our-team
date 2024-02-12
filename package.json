@@ -1,0 +1,18 @@
+{
+  "name": "our-team",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.2",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  }
+}
