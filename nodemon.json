@@ -8,5 +8,5 @@
       "src/logs/*", 
       "src/**/*.{spec,test}.ts"
   ], 
-  "exec": "ts-node src/server"
+  "exec": "npx tsc && ts-node src/server"
 }
