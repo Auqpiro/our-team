@@ -20,7 +20,7 @@ type RegistryRequestBody = {
   password: string;
 };
 type LoginRequestBody = Omit<RegistryRequestBody, "name">;
-type Callback = (err: string | null, user: IUser | null) => void;
+type Callback = (err: string | null, user: Pick<IUser, "id" | "likes"> | null) => void;
 interface UserModel extends Model<IUser> {
   signUp(body: RegistryRequestBody, callback: Callback): void;
   signIn(body: LoginRequestBody, callback: Callback): void;
@@ -72,23 +72,24 @@ userSchema.static(
     }
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
-    const newUser = await this.create({ name, email, password: hashPassword });
-    return callback(null, newUser);
+    const { _id, likes } = await this.create({ name, email, password: hashPassword });
+    return callback(null, { id: _id.toString(), likes });
   }
 );
 userSchema.static(
   "signIn",
   async function signIn({ email, password }, callback) {
-    const existingUser: IUser | null = await this.findOne({ email });
+    const existingUser: Pick<IUser, "id" | "password" | "likes"> | null =
+      await this.findOne({ email }, { likes: 1, password: 1 });
     if (!existingUser) {
       return callback("Incorrect email", null);
-    } else {
-      const isEqual = await bcrypt.compare(password, existingUser.password);
-      if (!isEqual) {
-        return callback("Incorrect password", null);
-      }
-      return callback(null, existingUser);
     }
+    const isEqual = await bcrypt.compare(password, existingUser.password);
+    if (!isEqual) {
+      return callback("Incorrect password", null);
+    }
+    const { id, likes } = existingUser;
+    return callback(null, { id, likes });
   }
 );
 userSchema.plugin(toJson);

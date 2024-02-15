@@ -9,5 +9,5 @@ router.use(
 );
 router.get("/", getUsers);
 router.get("/:id", getUser);
-router.patch("/:id", updateUser);
+router.patch("/:id/", updateUser);
 export default router;

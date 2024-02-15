@@ -5,11 +5,11 @@ import jwt, { Secret } from "jsonwebtoken";
 const signUp = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
-    res.status(200).send("All fields must be filled");
+    res.status(200).send({ error: "All fields must be filled" });
   } else if (!validator.isEmail(email)) {
-    res.status(200).send("Email is not valid");
+    res.status(200).send({ error: "Email is not valid" });
   } else if (!validator.isStrongPassword(password)) {
-    res.status(200).send("Password is not strong enough");
+    res.status(200).send({ error: "Password is not strong enough" });
   } else {
     await User.signUp({ name, email, password }, (error, user) => {
       if (error) {
@@ -22,7 +22,7 @@ const signUp = async (req: Request, res: Response) => {
         res
           .status(201)
           .cookie("token", token, { maxAge: 12 * 60 * 60, httpOnly: true })
-          .send();
+          .send(user);
       }
     });
   }

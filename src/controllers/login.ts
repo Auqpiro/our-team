@@ -4,7 +4,7 @@ import jwt, { Secret } from "jsonwebtoken";
 const signIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.status(200).send("All fields must be filled");
+    res.status(200).send({ error: "All fields must be filled" });
   } else {
     await User.signIn({ email, password }, (error, user) => {
       if (error) {
@@ -17,7 +17,7 @@ const signIn = async (req: Request, res: Response) => {
         res
           .status(200)
           .cookie("token", token, { maxAge: 12 * 60 * 60, httpOnly: true })
-          .send();
+          .send(user);
       }
     });
   }
