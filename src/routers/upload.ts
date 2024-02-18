@@ -3,6 +3,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import multer, { memoryStorage } from "multer";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { imagesStorageRef } from "../storages/firebase";
+import User from "@models/user";
 const upload = multer({ storage: memoryStorage() });
 const router = express.Router();
 router.post(
@@ -29,7 +30,8 @@ router.post(
             };
             uploadBytes(spaceRef, file.buffer, metadata)
               .then(() => getDownloadURL(spaceRef))
-              .then((url) => res.status(201).send({ url }))
+              .then((url) => User.findByIdAndUpdate(id, { icon: url }))
+              .then(() => res.status(200).send())
               .catch((error) => {
                 console.log(error);
                 res.status(500).send({ error });
