@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import usersRouter from "@routers/users";
 import loginRouter from "@routers/login";
 import registrationRouter from "@routers/registration";
+import uploadRouter from "@routers/upload";
 import cookieParser from "cookie-parser";
 dotenv.config();
 const PORT = process.env.APP_PORT || 5000;
@@ -22,6 +23,7 @@ app.use(cors());
 app.use("/users", usersRouter);
 app.use("/signin", loginRouter);
 app.use("/signup", registrationRouter);
+app.use("/upload", uploadRouter);
 app.use(express.static(staticPath));
 app.all("/*", (_, res: Response) => {
   res.sendFile(path.join(staticPath, "index.html"));
@@ -29,7 +31,7 @@ app.all("/*", (_, res: Response) => {
 mongoose
   .connect(DB_CONNECT_URL)
   .then(() => {
-    console.log("Connected to MongoDB database");
+    console.log(`Connected to MongoDB database with URL: ${DB_CONNECT_URL}`);
     app.listen(PORT, () => {
       console.log(`Server is running at http://localhost:${PORT}`);
     });
