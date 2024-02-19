@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, getUsers, updateUser } from "@controllers/users";
+import { getUser, getUsers, toggleLike, updateUserInfo } from "@controllers/users";
 import cors from "cors";
 import { jwtAuthCookiesMiddleware } from "@middlewares/auth";
 const router = express.Router();
@@ -10,5 +10,6 @@ router.use(
 );
 router.get("/", jwtAuthCookiesMiddleware, getUsers);
 router.get("/:id", jwtAuthCookiesMiddleware, getUser);
-router.patch("/:id/", jwtAuthCookiesMiddleware, updateUser);
+router.patch("/:id/info", jwtAuthCookiesMiddleware, updateUserInfo);
+router.patch("/:id/like", jwtAuthCookiesMiddleware, toggleLike);
 export default router;
