@@ -12,3 +12,6 @@ client-start:
 
 client-build:
 	npm run build --prefix client
+
+lint:
+	npm run lint && npm run lint --prefix client

@@ -50,12 +50,10 @@ const toggleLike = (req: LocalRequest, res: Response) => {
           if (!Array.isArray(likes)) {
             throw new Error(`User ${id} has no likes`);
           }
-          const likeInd = likes.findIndex((likedUserID) => likedUserID === id);
-          let updatedLikes = likes.slice();
-          updatedLikes.splice(likeInd, Number(!!~likeInd));
-          updatedLikes = ~likeInd
-            ? updatedLikes
-            : (updatedLikes = likes.concat([id]));
+          const alreadyLiked = likes.find((likedUserID) => likedUserID === id);
+          const updatedLikes = alreadyLiked
+            ? likes.filter((likedUserID) => likedUserID !== id)
+            : likes.concat([id]);
           User.findByIdAndUpdate(actionCreatorID, { likes: updatedLikes })
             .then(() => res.status(200).send())
             .catch((error) => res.status(500).send({ error }));

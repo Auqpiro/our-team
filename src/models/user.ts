@@ -1,5 +1,5 @@
 import { Model, Schema, model } from "mongoose";
-import { fakerRU as faker, ne } from "@faker-js/faker";
+import { fakerRU as faker } from "@faker-js/faker";
 import bcrypt from "bcrypt";
 // @ts-ignore
 import toJson from "@meanie/mongoose-to-json";

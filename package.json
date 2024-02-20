@@ -15,7 +15,8 @@
     "prestart": "npm run build",
     "start": "node .",
     "dev": "nodemon",
-    "postinstall": "npm ci --prefix client"
+    "postinstall": "npm ci --prefix client",
+    "lint": "npx eslint ."
   },
   "keywords": [],
   "author": "",
@@ -46,6 +47,9 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.11.17",
     "@types/validator": "^13.11.9",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
