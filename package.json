@@ -7,7 +7,8 @@
     "@controllers": "dist/controllers",
     "@middlewares": "dist/middlewares",
     "@models": "dist/models",
-    "@routers": "dist/routers"
+    "@routers": "dist/routers",
+    "@storages": "dist/storages"
   },
   "scripts": {
     "build": "npx tsc",

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { imagesStorageRef } from "../storages/firebase";
+import { imagesStorageRef } from "@storages/firebase";
 import User from "@models/user";
 const uploadUserIcon = (req: Request, res: Response) => {
   const { id } = req.params;
